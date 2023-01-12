@@ -1,4 +1,5 @@
 import { memo, useState } from 'react';
+import * as authService from '../../services/auth';
 import Field from '../Field/Field';
 import ErrorField from '../ErrorField/ErrorField';
 
@@ -23,17 +24,23 @@ function SignUp({ notify }) {
         },
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        isPasswordsIdentical: true,
+    });
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        // getting object with errors
         const formErrors = validateFields(formState);
 
+        // checking if in formErrors object have not valid fields
         if (Object.keys(formErrors).length > 0) {
             setErrors((state) => ({
                 ...formErrors,
+                isPasswordsIdentical: true,
             }));
-            notify('All fields are required!');
+
             return;
         }
 
@@ -42,11 +49,14 @@ function SignUp({ notify }) {
             formState.rePassword
         );
 
-        setErrors((state) => ({
-            ...state,
+        // set isPasswordsIdentical based on result from isPasswordsIdentical function
+        setErrors({
             isPasswordsIdentical: isIdentical,
-        }));
+        });
 
+        if (!isIdentical) return;
+
+        authService.signUp(formState);
         notify('Successfully create your account!');
     };
 
@@ -85,6 +95,7 @@ function SignUp({ notify }) {
                 value={formState.name}
                 onChange={handleChange}
             />
+            {errors.name && <ErrorField errorMessage={errors.name} />}
             <Field
                 labelFor="email"
                 labelText="Email"
@@ -93,6 +104,7 @@ function SignUp({ notify }) {
                 value={formState.email}
                 onChange={handleChange}
             />
+            {errors.email && <ErrorField errorMessage={errors.email} />}
             <Field
                 labelFor="password"
                 labelText="Password"
@@ -101,6 +113,7 @@ function SignUp({ notify }) {
                 value={formState.password}
                 onChange={handleChange}
             />
+            {errors.password && <ErrorField errorMessage={errors.password} />}
             <Field
                 labelFor="rePassword"
                 labelText="Re-Password"
@@ -109,7 +122,12 @@ function SignUp({ notify }) {
                 value={formState.rePassword}
                 onChange={handleChange}
             />
-            <ErrorField errorMessage="Some Error happen" />
+            {errors.rePassword && (
+                <ErrorField errorMessage={errors.rePassword} />
+            )}
+            {!errors?.isPasswordsIdentical && !errors?.rePassword ? (
+                <ErrorField errorMessage="Password's not identical!" />
+            ) : null}
             <p>Age</p>
             <Field
                 labelFor="underThirteen"
@@ -127,6 +145,7 @@ function SignUp({ notify }) {
                 value="thirteenOrOlder"
                 onChange={handleChange}
             />
+            {errors.age && <ErrorField errorMessage={errors.age} />}
             <Field
                 labelFor="birthday"
                 labelText="Birthday"
@@ -135,10 +154,13 @@ function SignUp({ notify }) {
                 value={formState.birthday}
                 onChange={handleChange}
             />
+            {errors.birthday && <ErrorField errorMessage={errors.birthday} />}
             <h3 className={styles.subTitle}>
                 <span className={styles.circle}>2</span> Your profile
             </h3>
-            <label htmlFor="biography">Biography</label>
+            <label htmlFor="biography" className={styles.labelTitle}>
+                Biography
+            </label>
             <textarea
                 className={styles.textarea}
                 name="biography"
@@ -148,6 +170,7 @@ function SignUp({ notify }) {
                 cols="30"
                 rows="10"
             ></textarea>
+            {errors.biography && <ErrorField errorMessage={errors.biography} />}
             <Field
                 labelFor="profilePicture"
                 labelText="Profile Picture"
@@ -156,7 +179,12 @@ function SignUp({ notify }) {
                 value={formState.profilePicture}
                 onChange={handleChange}
             />
-            <label htmlFor="jobRole">Job Role</label>
+            {errors.profilePicture && (
+                <ErrorField errorMessage={errors.profilePicture} />
+            )}
+            <label htmlFor="jobRole" className={styles.labelTitle}>
+                Job Role
+            </label>
             <select
                 name="jobRole"
                 id="jobRole"
@@ -168,7 +196,8 @@ function SignUp({ notify }) {
                 <option value="devOps">DevOps Engineers</option>
                 <option value="qa">QA Automation Engineer</option>
             </select>
-            <p>Interests</p>
+            {errors.jobRole && <ErrorField errorMessage={errors.jobRole} />}
+            <p className={styles.heading}>Interests</p>
             <Field
                 labelFor="interests"
                 labelText="Development"
@@ -196,6 +225,7 @@ function SignUp({ notify }) {
                 onChange={handleChange}
                 id="business"
             />
+            {errors.interests && <ErrorField errorMessage={errors.interests} />}
             <button className={styles.signUpBtn}>Sign Up</button>
         </form>
     );

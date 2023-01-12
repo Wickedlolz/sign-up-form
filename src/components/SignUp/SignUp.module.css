@@ -51,3 +51,13 @@
 .interestsLabel:last-of-type {
     margin-bottom: 20px;
 }
+
+.heading {
+    font-weight: bold;
+}
+
+.labelTitle {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
