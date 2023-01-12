@@ -1,0 +1,9 @@
+.labelTitle {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.input {
+    width: 100%;
+}

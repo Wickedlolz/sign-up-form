@@ -1,0 +1,53 @@
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+}
+
+.subTitle {
+    margin-bottom: 8px;
+}
+
+.circle {
+    display: inline-block;
+    width: 25px;
+    height: 26px;
+    border-radius: 50%;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #5cca6f;
+}
+
+.signUpBtn {
+    width: 100%;
+    background-color: #5cca6f;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 6px 0px;
+    margin-bottom: 15px;
+
+    transition: background-color 300ms ease-in-out;
+}
+
+.signUpBtn:hover {
+    background-color: rgba(92, 202, 111, 0.8);
+}
+
+.textarea {
+    background-color: #eee;
+    width: 100%;
+}
+
+.interestsLabel {
+    display: block;
+}
+
+.interestsLabel:last-of-type {
+    margin-bottom: 20px;
+}
