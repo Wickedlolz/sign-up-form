@@ -128,7 +128,7 @@ function SignUp({ notify }) {
             {!errors?.isPasswordsIdentical && !errors?.rePassword ? (
                 <ErrorField errorMessage="Password's not identical!" />
             ) : null}
-            <p>Age</p>
+            <p className={styles.heading}>Age</p>
             <Field
                 labelFor="underThirteen"
                 labelText="Under 13"
