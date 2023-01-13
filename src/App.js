@@ -28,9 +28,9 @@ function App() {
 
     return (
         <div className="App">
-            <div className="wrapper">
+            <section className="wrapper">
                 <SignUp notify={notify} />
-            </div>
+            </section>
             {modalState.open && <Modal msg={modalState.msg} />}
         </div>
     );

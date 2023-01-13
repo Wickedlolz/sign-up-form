@@ -6,23 +6,27 @@ import ErrorField from '../ErrorField/ErrorField';
 import styles from './SignUp.module.css';
 import { isPasswordsIdentical, validateFields } from '../../utils/helpers';
 
+const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    rePassword: '',
+    age: '',
+    birthday: '',
+    phoneNumber: '',
+    website: '',
+    biography: '',
+    profilePicture: '',
+    jobRole: 'frontEnd',
+    interests: {
+        development: false,
+        design: false,
+        business: false,
+    },
+};
+
 function SignUp({ notify }) {
-    const [formState, setFormState] = useState({
-        name: '',
-        email: '',
-        password: '',
-        rePassword: '',
-        age: '',
-        birthday: '',
-        biography: '',
-        profilePicture: '',
-        jobRole: 'frontEnd',
-        interests: {
-            development: false,
-            design: false,
-            business: false,
-        },
-    });
+    const [formState, setFormState] = useState(initialState);
 
     const [errors, setErrors] = useState({
         isPasswordsIdentical: true,
@@ -57,6 +61,7 @@ function SignUp({ notify }) {
         if (!isIdentical) return;
 
         authService.signUp(formState);
+        resetForm();
         notify('Successfully create your account!');
     };
 
@@ -79,6 +84,10 @@ function SignUp({ notify }) {
                 [name]: value,
             }));
         }
+    };
+
+    const resetForm = () => {
+        setFormState(initialState);
     };
 
     return (
@@ -155,6 +164,26 @@ function SignUp({ notify }) {
                 onChange={handleChange}
             />
             {errors.birthday && <ErrorField errorMessage={errors.birthday} />}
+            <Field
+                labelFor="phoneNumber"
+                labelText="Phone Number"
+                type="tel"
+                inputName="phoneNumber"
+                value={formState.phoneNumber}
+                onChange={handleChange}
+            />
+            {errors.phoneNumber && (
+                <ErrorField errorMessage={errors.phoneNumber} />
+            )}
+            <Field
+                labelFor="website"
+                labelText="Your website"
+                type="url"
+                inputName="website"
+                value={formState.website}
+                onChange={handleChange}
+            />
+            {errors.website && <ErrorField errorMessage={errors.website} />}
             <h3 className={styles.subTitle}>
                 <span className={styles.circle}>2</span> Your profile
             </h3>
