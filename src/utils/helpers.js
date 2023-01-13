@@ -7,7 +7,10 @@ export const validateFields = (formState) => {
         }
 
         if (field === 'email') {
-            if (!isValidEmail(formState[field])) {
+            if (
+                !isValidEmail(formState[field]) &&
+                formState[field].length > 0
+            ) {
                 formErrors[field] = 'Invalid email adress.';
             }
         }
@@ -18,7 +21,7 @@ export const validateFields = (formState) => {
                 !formState.interests.design &&
                 !formState.interests.business
             )
-                formErrors[field] = 'is required';
+                formErrors[field] = field + ' is required';
         }
     });
 
