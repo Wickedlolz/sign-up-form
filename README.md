@@ -9,6 +9,8 @@ The second one is Your profile wich contain Biography, Profile Picture, Job Role
 After submitting form and fields are empty will show you notification under every field.
 When form submitted with correct fields form will reset and will show you modal with text for successfully created account.
 
+Validations is for non empty fields and one validaiton for email to be valid wich use regex.
+
 ## How to run it manualy?
 
 -   download repo
