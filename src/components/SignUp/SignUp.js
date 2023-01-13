@@ -60,9 +60,14 @@ function SignUp({ notify }) {
 
         if (!isIdentical) return;
 
-        authService.signUp(formState);
-        resetForm();
-        notify('Successfully create your account!');
+        authService
+            .signUp(formState)
+            // .then(res => res.json())
+            .then((result) => {
+                resetForm();
+                notify('Successfully create your account!');
+            })
+            .catch((error) => console.error(error));
     };
 
     const handleChange = (event) => {
